@@ -1,36 +1,34 @@
-import { GoogleSpreadsheet } from 'google-spreadsheet';
-import { JWT } from 'google-auth-library';
+import { GoogleSpreadsheet } from "google-spreadsheet";
+import { JWT } from "google-auth-library";
 
-const SCOPES = [
-  'https://www.googleapis.com/auth/spreadsheets.readonly',
-];
+const SCOPES = ["https://www.googleapis.com/auth/spreadsheets.readonly"];
 
 export async function getSheetData() {
   try {
-    console.log('Initializing Google Sheets connection...');
+    console.log("Initializing Google Sheets connection...");
     const jwt = new JWT({
       email: process.env.GOOGLE_SHEETS_CLIENT_EMAIL,
-      key: process.env.GOOGLE_SHEETS_PRIVATE_KEY?.replace(/\\n/g, '\n'),
+      key: process.env.GOOGLE_SHEETS_PRIVATE_KEY?.replace(/\\n/g, "\n"),
       scopes: SCOPES,
     });
 
     const doc = new GoogleSpreadsheet(process.env.GOOGLE_SHEETS_SHEET_ID, jwt);
-    console.log('Loading document info...');
+    console.log("Loading document info...");
     await doc.loadInfo();
 
     const sheet = doc.sheetsByIndex[0];
-    console.log('Fetching rows...');
+    console.log("Fetching rows...");
     const rows = await sheet.getRows();
 
-    const data = rows.map(row => ({
-      question: row.get('question'),
-      answer: row.get('answer'),
+    const data = rows.map((row) => ({
+      prompt: row.get("prompt"),
+      completion: row.get("completion"),
     }));
 
-    console.log('Data fetched successfully');
+    console.log("Data fetched successfully");
     return data;
   } catch (error) {
-    console.error('Error in getSheetData:', error);
+    console.error("Error in getSheetData:", error);
     throw error;
   }
 }
