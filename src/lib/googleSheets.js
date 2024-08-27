@@ -8,7 +8,7 @@ export async function getSheetData() {
     console.log("Initializing Google Sheets connection...");
     const jwt = new JWT({
       email: process.env.GOOGLE_SHEETS_CLIENT_EMAIL,
-      key: process.env.GOOGLE_SHEETS_PRIVATE_KEY?.replace(/\\n/g, "\n"),
+      key: process.env.GOOGLE_SHEETS_PRIVATE_KEY?.split(String.raw`\n`).join('\n'),
       scopes: SCOPES,
     });
 
