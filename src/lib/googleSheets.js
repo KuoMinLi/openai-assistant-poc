@@ -6,9 +6,13 @@ const SCOPES = ["https://www.googleapis.com/auth/spreadsheets.readonly"];
 export async function getSheetData() {
   try {
     console.log("Initializing Google Sheets connection...");
+    const base64EncodedKey = process.env.GOOGLE_SHEETS_PRIVATE_KEY_BASE64;
+    const decodedKey = Buffer.from(base64EncodedKey, 'base64').toString('utf-8');
+
+    console.log("Decoded key:", decodedKey);
     const jwt = new JWT({
       email: process.env.GOOGLE_SHEETS_CLIENT_EMAIL,
-      key: process.env.GOOGLE_SHEETS_PRIVATE_KEY?.split(String.raw`\n`).join('\n'),
+      key: decodedKey,
       scopes: SCOPES,
     });
 
