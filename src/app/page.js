@@ -2,7 +2,7 @@
 import { useState, useEffect, useRef } from "react";
 import { useChat } from "ai/react";
 import { formatDataForOpenAI } from "@/utils/dataFormatter";
-import { fetchSheetData } from "./fetchSheetData";
+import { fetchSheetData } from "@/lib/fetchSheetData";
 
 export default function TestAssistant() {
   const [fileId, setFileId] = useState(null);
@@ -47,7 +47,7 @@ export default function TestAssistant() {
   }, []);
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <div className="flex justify-center items-center h-screen text-gray_5 text-2xl font-bold">Loading...</div>;
   }
 
   if (error) {
@@ -78,7 +78,7 @@ export default function TestAssistant() {
         />
         <button
           type="submit"
-          className="bg-blue-500 text-white px-4 py-2 rounded"
+          className="bg-gray_5 hover:bg-gray_4 text-white font-bold py-2 px-4 rounded"
         >
           Send
         </button>
