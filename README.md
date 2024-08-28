@@ -34,3 +34,46 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+
+## Environment Variables Setup Guide
+
+This project requires the following environment variables to be set up for proper functioning. Please ensure these variables are correctly configured before running the project.
+
+### Required Environment Variables
+
+1. `GOOGLE_SHEETS_PRIVATE_KEY`
+   - Private key for accessing the Google Sheets API
+
+2. `GOOGLE_SHEETS_CLIENT_EMAIL`
+   - Client email for Google Sheets API authentication
+
+3. `GOOGLE_SHEETS_SHEET_ID`
+   - ID of the Google Sheets document to be used
+
+4. `OPENAI_API_KEY`
+   - Access key for the OpenAI API
+
+5. `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY`
+   - Publishable key for Clerk authentication service
+
+6. `CLERK_SECRET_KEY`
+   - Secret key for Clerk authentication service
+
+### Setup Instructions
+
+1. Create a `.env` file in the root directory of the project.
+2. Add the above variables to the `.env` file in the following format:
+
+```
+GOOGLE_SHEETS_PRIVATE_KEY=your_private_key_here
+GOOGLE_SHEETS_CLIENT_EMAIL=your_client_email@example.com
+GOOGLE_SHEETS_SHEET_ID=your_sheet_id_here
+OPENAI_API_KEY=your_openai_api_key_here
+NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=your_clerk_publishable_key_here
+CLERK_SECRET_KEY=your_clerk_secret_key_here
+```
+
+3. Replace `your_xxx_here` with the actual values.
+4. Ensure that the `.env` file is added to your `.gitignore` to prevent sensitive information from being committed to version control.
+
+Note: Please keep these keys secure and do not share them with unauthorized individuals.
