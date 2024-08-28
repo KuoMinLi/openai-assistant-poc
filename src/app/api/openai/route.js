@@ -46,6 +46,14 @@ export async function POST(request) {
       purpose: "fine-tune",
     });
 
+    const fineTune = await openai.fineTuning.jobs.create({
+      training_file: response.id, 
+      model: "gpt-3.5-turbo-0125",
+    });
+
+    const job = await openai.fineTuning.jobs.retrieve(fineTune.id);
+    console.log(job.status);
+
     // 返回文件 ID 和其他相關信息
     return NextResponse.json({ success: true, data: response });
   } catch (error) {
