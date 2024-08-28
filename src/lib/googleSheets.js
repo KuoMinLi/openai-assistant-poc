@@ -1,18 +1,17 @@
 import { GoogleSpreadsheet } from "google-spreadsheet";
 import { JWT } from "google-auth-library";
+import { getDecodedPrivateKey } from '../utils/envConfig';
 
 const SCOPES = ["https://www.googleapis.com/auth/spreadsheets.readonly"];
 
 export async function getSheetData() {
   try {
     console.log("Initializing Google Sheets connection...");
-    const base64EncodedKey = process.env.GOOGLE_SHEETS_PRIVATE_KEY_BASE64;
-    const decodedKey = Buffer.from(base64EncodedKey, 'base64').toString('utf-8');
+    const decodedKey = getDecodedPrivateKey();
 
-    console.log("Decoded key:", decodedKey);
     const jwt = new JWT({
       email: process.env.GOOGLE_SHEETS_CLIENT_EMAIL,
-      key: decodedKey,
+      key: process.env.NODE_ENV === 'development' ? process.env.GOOGLE_SHEETS_PRIVATE_KEY : decodedKey,
       scopes: SCOPES,
     });
 

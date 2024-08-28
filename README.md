@@ -44,19 +44,22 @@ This project requires the following environment variables to be set up for prope
 1. `GOOGLE_SHEETS_PRIVATE_KEY`
    - Private key for accessing the Google Sheets API
 
-2. `GOOGLE_SHEETS_CLIENT_EMAIL`
+2. `GOOGLE_SHEETS_PRIVATE_KEY_BASE64`
+   - Base64 encoded private key for Google Sheets API authentication.
+
+3. `GOOGLE_SHEETS_CLIENT_EMAIL`
    - Client email for Google Sheets API authentication
 
-3. `GOOGLE_SHEETS_SHEET_ID`
+4. `GOOGLE_SHEETS_SHEET_ID`
    - ID of the Google Sheets document to be used
 
-4. `OPENAI_API_KEY`
+5. `OPENAI_API_KEY`
    - Access key for the OpenAI API
 
-5. `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY`
+6. `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY`
    - Publishable key for Clerk authentication service
 
-6. `CLERK_SECRET_KEY`
+7. `CLERK_SECRET_KEY`
    - Secret key for Clerk authentication service
 
 ### Setup Instructions
