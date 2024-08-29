@@ -7,7 +7,9 @@ import { fetchSheetData } from "@/lib/fetchSheetData";
 export default function TestAssistant() {
   // 版本號用 console.log 顯示
   const version = "0.1.0";
-  console.log(`版本號: ${version}`);
+  useEffect(() => {
+    console.log(`版本號: ${version}`);
+  }, []);
 
   const [fileId, setFileId] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
