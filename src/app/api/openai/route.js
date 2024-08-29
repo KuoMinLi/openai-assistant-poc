@@ -22,12 +22,7 @@ export async function POST(request) {
 
     // 轉換數據為 JSONL 格式
     const jsonlData = formattedData
-      .map((item, index) => {
-        if (!item.prompt || !item.completion) {
-          throw new Error(
-            `Item at index ${index} is missing prompt or completion`
-          );
-        }
+      .map((item) => {
         return JSON.stringify(item);
       })
       .join("\n");
@@ -47,7 +42,7 @@ export async function POST(request) {
     });
 
     const fineTune = await openai.fineTuning.jobs.create({
-      training_file: response.id, 
+      training_file: response.id,
       model: "gpt-3.5-turbo-0125",
     });
 
