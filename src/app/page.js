@@ -5,6 +5,10 @@ import { formatDataForOpenAI } from "@/utils/dataFormatter";
 import { fetchSheetData } from "@/lib/fetchSheetData";
 
 export default function TestAssistant() {
+  // 版本號用 console.log 顯示
+  const version = "0.1.0";
+  console.log(`版本號: ${version}`);
+
   const [fileId, setFileId] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -51,7 +55,7 @@ export default function TestAssistant() {
   }, [isUploadData]);
   
   return (
-    <>
+    <div className="container mx-auto px-4 sm:px-6 lg:px-8">
       {isLoading && (
         <div className="flex justify-center items-center h-screen text-gray_5 text-2xl font-bold">
           Loading...
@@ -63,7 +67,7 @@ export default function TestAssistant() {
           <p>{error}</p>
         </div>
       )}
-      <div className="p-4">
+      <div className="pt-4">
         <div className="flex justify-between">
           <h1 className="text-2xl font-bold mb-4">Assistant Test</h1>
           <button
@@ -97,6 +101,6 @@ export default function TestAssistant() {
           </button>
         </form>
       </div>
-    </>
+    </div>
   );
 }
