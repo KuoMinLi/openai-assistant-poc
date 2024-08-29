@@ -5,19 +5,17 @@ const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
-
 export async function POST(req) {
-  
   const { messages, fileId } = await req.json();
 
   const response = await openai.chat.completions.create({
-    model: "job.fine_tuned_model",
+    model: "ft:gpt-3.5-turbo-0125:personal::A19vP0ZP",
     messages: [
       ...messages,
-      { role: "system", content: "You are a helpful assistant." },
+      { role: "system", content: "You are a helpful assistant trained to answer questions in Chinese." },
       { role: "user", content: "Your prompt here" }
     ],
-    response_format: { type: "json_object" },
+    temperature: 0.7,
     stream: true,
     file_ids: fileId ? [fileId] : undefined,
   });
