@@ -6,20 +6,24 @@ import { fetchSheetData } from "@/lib/fetchSheetData";
 
 export default function TestAssistant() {
   const [fileId, setFileId] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
-  const requestMade = useRef(false);
+  const [isUploadData, setIsUploadData] = useState(false);
 
   const { messages, input, handleInputChange, handleSubmit } = useChat({
     api: "/api/chat",
     body: { fileId },
   });
 
+  const handleUploadData = () => {
+    console.log("Uploading data...");
+    // setIsUploadData(true);
+    // 待確定 prompt 和 completion 的資料
+  };
+
   useEffect(() => {
-    if (requestMade.current) return;
+    if (!isUploadData) return;
     async function prepareData() {
-      if (requestMade.current) return;
-      requestMade.current = true;
       try {
         setIsLoading(true);
         const sheetData = await fetchSheetData();
@@ -44,45 +48,55 @@ export default function TestAssistant() {
       }
     }
     prepareData();
-  }, []);
-
-  if (isLoading) {
-    return <div className="flex justify-center items-center h-screen text-gray_5 text-2xl font-bold">Loading...</div>;
-  }
-
-  if (error) {
-    return (
-      <div>
-        <h1>Error</h1>
-        <p>{error}</p>
-      </div>
-    );
-  }
-
+  }, [isUploadData]);
+  
   return (
-    <div className="p-4">
-      <h1 className="text-2xl font-bold mb-4">Assistant Test</h1>
-      <div className="mb-4">
-        {messages.map((m) => (
-          <div key={m.id} className="mb-2">
-            <strong>{m.role}:</strong> {m.content}
-          </div>
-        ))}
+    <>
+      {isLoading && (
+        <div className="flex justify-center items-center h-screen text-gray_5 text-2xl font-bold">
+          Loading...
+        </div>
+      )}
+      {error && (
+        <div className="flex justify-center items-center h-screen text-gray_5 text-2xl font-bold">
+          <h1>Error</h1>
+          <p>{error}</p>
+        </div>
+      )}
+      <div className="p-4">
+        <div className="flex justify-between">
+          <h1 className="text-2xl font-bold mb-4">Assistant Test</h1>
+          <button
+            type="button"
+            onClick={handleUploadData}
+            className="bg-gray_5 hover:bg-gray_4 text-white font-bold py-2 px-4 rounded"
+          >
+            Upload Data
+          </button>
+        </div>
+        
+        <div className="mb-4">
+          {messages.map((m) => (
+            <div key={m.id} className="mb-2">
+              <strong>{m.role}:</strong> {m.content}
+            </div>
+          ))}
+        </div>
+        <form onSubmit={handleSubmit} className="flex">
+          <input
+            className="flex-grow border rounded p-2 mr-2 text-black"
+            value={input}
+            onChange={handleInputChange}
+            placeholder="Ask something..."
+          />
+          <button
+            type="submit"
+            className="bg-gray_5 hover:bg-gray_4 text-white font-bold py-2 px-4 rounded"
+          >
+            Send
+          </button>
+        </form>
       </div>
-      <form onSubmit={handleSubmit} className="flex">
-        <input
-          className="flex-grow border rounded p-2 mr-2 text-black"
-          value={input}
-          onChange={handleInputChange}
-          placeholder="Ask something..."
-        />
-        <button
-          type="submit"
-          className="bg-gray_5 hover:bg-gray_4 text-white font-bold py-2 px-4 rounded"
-        >
-          Send
-        </button>
-      </form>
-    </div>
+    </>
   );
 }
